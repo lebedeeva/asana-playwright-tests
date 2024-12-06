@@ -15,8 +15,8 @@ class AsanaLogin {
     loginButton: '//*[text()="Log in"]',
     dashboardSelector: '//div[@class="HomePageContent"]',
     projectSelector: '//span[contains(text(), "{project}")]',
-    taskSelector: '//h3[contains(text(), "{column}")]//following::div[contains(@class, "BoardCard-taskName") and contains(text(), "{task}")]',
-    tagSelector: '//span[contains(@class, "BoardCard-taskName") and text()="{task}"]//ancestor::div[contains(@class, "BoardCardLayout")]//span[text()="{tag}"]'
+    taskSelector: '//div[@class ="CommentOnlyBoardColumn-header"]//h3[contains(text(), "{column1}") and contains(text(), "{column2}")]/../..//ancestor::span[contains(text(),"{task}")]',
+    tagSelector: '//div[@class ="CommentOnlyBoardColumn-header"]//h3[contains(text(), "{column1}") and contains(text(), "{column2}")]/../..//ancestor::span[contains(text(),"{task}")]/../../../..//ancestor::span[text()="{tag}"]'
   };
 
   // Login method using the defined selectors
@@ -38,15 +38,17 @@ class AsanaLogin {
   };
 
   // Check if the task is in the correct column
-  async isTaskInColumn(task, column) {
-    const taskSelector = AsanaLogin.selectors.taskSelector.replace("{task}", task).replace("{column}", column);
-    return this.helper.isVisible(taskSelector);
+  async isTaskInColumn(task, column1, column2) {
+    const taskSelector = AsanaLogin.selectors.taskSelector.replace("{task}", task).replace("{column1}", column1).replace("{column2}", column2);
+    await this.helper.waitForSelector(taskSelector);
+    return await this.helper.isVisible(taskSelector);
   }
 
   // Check if a tag is visible on the page
-  async isTagVisible(tag) {
-    const tagSelector = AsanaLogin.selectors.tagSelector.replace("{tag}", tag);
-    return this.helper.isVisible(tagSelector);
+  async isTagVisible(task, column1, column2, tag) {
+    const tagSelector = AsanaLogin.selectors.tagSelector.replace("{task}", task).replace("{column1}", column1).replace("{column2}", column2).replace("{tag}", tag);
+    await this.helper.waitForSelector(tagSelector);
+    return await this.helper.isVisible(tagSelector);
   }
 }
 

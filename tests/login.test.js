@@ -29,7 +29,7 @@ if (!email || !password) {
 test.describe('Asana Task Validation', () => {
   // Loop through each test case in the test data
   testData.forEach((testCase, index) => {
-    const uniqueTestTitle = `Validate ${testCase.project} task is in ${testCase.column} and its tags - TC ${index + 1})`; // Make title unique by adding index
+    const uniqueTestTitle = `Validate ${testCase.project} task is in ${testCase.column1} ${testCase.column2} and its tags - TC ${index + 1}`; // Make title unique by adding index
 
     test(uniqueTestTitle, async ({ page }) => {
       const asanaLogin = new AsanaLogin(page);  // Create an instance of AsanaLogin with Playwright page
@@ -45,13 +45,13 @@ test.describe('Asana Task Validation', () => {
       await asanaLogin.navigateTo(testCase.project);
 
       // Validate each task in the test case
-      const { task, column, tags } = testCase; // Extract task details
-      const taskInColumn = await asanaLogin.isTaskInColumn(task, column);
-      expect(taskInColumn).toBe(true, `Test Case ${index + 1}: Task "${task}" was not found in the "${column}" column`);
+      const { task, column1, column2, tags } = testCase; // Extract task details
+      const taskInColumn = await asanaLogin.isTaskInColumn(task, column1, column2);
+      expect(taskInColumn).toBe(true, `Test Case ${index + 1}: Task "${task}" was not found in the column`);
 
       // Validate tags
       for (const tag of tags) {
-        const tagVisible = await asanaLogin.isTagVisible(tag);
+        const tagVisible = await asanaLogin.isTagVisible(task, column1, column2, tag);
         expect(tagVisible).toBe(true, `Test Case ${index + 1}: Tag "${tag}" not found for task "${task}" in project "${testCase.project}"`);
       }
     });
