@@ -36,4 +36,18 @@ Test Case 6
 Login to Asana.
 Navigate to "Work Requests."
 Verify "[Example] New keycard for Daniela V" is in the "Completed" column.
-Confirm tags: "Low effort," "New hardware," "High Priority," and "Done."
+Confirm tags: "Low effort," "New hardware," "High priority," and "Done."
+
+To Run Tests:
+
+To Run All Tests:
+npm test
+
+To Run Only the 'Asana Task Validation' Suite:
+npm run test:asanataskvalidation
+
+To Run Tests in Parallel:
+npm run test:parallel
+
+To Run a specific test from parallel:
+npm run test:singleinparallel

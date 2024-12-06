@@ -4,7 +4,14 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "playwright test",
+    "test:asanataskvalidation": "playwright test -g 'Asana Task Validation'",
+    "test:single": "playwright test -g 'Task Validation'",
+    "test:regression": "playwright test tests/regression/**/*.test.js",
+    "test:e2e": "playwright test tests/e2e/**/*.test.js",
+    "test:file": "playwright test path/to/your/testfile.test.js",
+    "test:parallel": "playwright test --workers=4",
+    "test:single:parallel": "playwright test -g 'Task Validation' --workers=4"
   },
   "keywords": [],
   "author": "",
